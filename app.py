@@ -103,4 +103,4 @@ if __name__=="__main__":
     # ml/model.py 선 실행 후 생성
     model = joblib.load('model/model.pkl')
     # Flask 서비스 스타트
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='0.0.0.0',port=8080)
