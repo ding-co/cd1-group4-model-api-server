@@ -1,4 +1,4 @@
-# Load librarY
+# Load library
 
 import pandas as pd
 import numpy as np
@@ -10,7 +10,7 @@ import joblib
 
 # Load ROSE processing data
 
-doc = pd.read_csv('rose_data2.csv', encoding='cp949')
+doc = pd.read_csv('ml/rose_data2.csv', encoding='cp949')
 
 # New dataframe copy exclude unnecessary column
 
@@ -44,8 +44,6 @@ ypred = elastic.predict(xtest)
 calibrator = CalibratedClassifierCV(elastic_model, cv='prefit')
 model=calibrator.fit(xtrain, ytrain.ravel())
 
-model.predict_proba(xtest)
-
 # Load model
 
-joblib.dump(elastic, '../model/model.pkl')
+joblib.dump(model, 'model/model.pkl')
