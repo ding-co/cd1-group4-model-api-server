@@ -37,11 +37,11 @@ xtrain, xtest, ytrain, ytest = train_test_split(min_max_scaling_x, y, test_size=
 # '풍속', '기압', '습도', '기온', '수온', '최대파고.m.', '유의파고.m.', '평균파고.m.', '파주기.sec.'
 
 elastic=SGDClassifier(loss="hinge", max_iter=10000, penalty="elasticnet", tol=0.01, random_state=15)
-elastic_model = elastic.fit(xtrain, ytrain.ravel())
+elastic.fit(xtrain, ytrain.ravel())
 
-ypred = elastic.predict(xtest)
+# Use CalibratedClassifierCV for SVM(hinge) -> 확률 보정
 
-calibrator = CalibratedClassifierCV(elastic_model, cv='prefit')
+calibrator = CalibratedClassifierCV(elastic, cv='prefit')
 model=calibrator.fit(xtrain, ytrain.ravel())
 
 # Load model
