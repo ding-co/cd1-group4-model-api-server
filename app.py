@@ -13,9 +13,9 @@ def index():
 
 
 # 데이터 예측 처리
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET'])
 def make_prediction():
-    if request.method == 'POST':
+    if request.method == 'GET':
 
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
         prediction = (model.predict_proba([[0.09195619, 0.67504492, 0.75955954, 0.66476231, 0.56372769,
@@ -33,4 +33,4 @@ if __name__=="__main__":
     # ml/model.py 선 실행 후 생성
     model = joblib.load('model/model.pkl')
     # Flask 서비스 스타트
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=True)
