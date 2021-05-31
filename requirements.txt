@@ -1,7 +1,7 @@
 Flask
 Jinja2
 numpy
-scikit-learn
+sklearn
 scipy
 virtualenv
 pillow

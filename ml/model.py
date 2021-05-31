@@ -10,7 +10,7 @@ import joblib
 
 # Load ROSE processing data
 
-doc = pd.read_csv('ml/rose_data2.csv', encoding='cp949')
+doc = pd.read_csv('ml/rose_data.csv', encoding='cp949')
 
 # New dataframe copy exclude unnecessary column
 
