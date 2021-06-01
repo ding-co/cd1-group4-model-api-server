@@ -5,3 +5,4 @@ sklearn
 scipy
 virtualenv
 pillow
+Flask-JSON
