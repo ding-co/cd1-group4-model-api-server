@@ -47,15 +47,15 @@ def index():
 def mapGET():
     if request.method == 'GET':
 
-        wind_spd = request.args.get('key', 'value')
-        atm_pres = request.args.get('key', 'value')
-        humid = request.args.get('key', 'value')
-        temp = request.args.get('key', 'value')
-        water_temp = request.args.get('key', 'value')
-        max_wave_h = request.args.get('key', 'value')
-        sig_wave_h = request.args.get('key', 'value')
-        avg_wave_h = request.args.get('key', 'value')
-        wave_cycle = request.args.get('key', 'value')
+        wind_spd = request.args.get('wind_spd', 'value')
+        atm_pres = request.args.get('atm_pres', 'value')
+        humid = request.args.get('humid', 'value')
+        temp = request.args.get('temp', 'value')
+        water_temp = request.args.get('water_temp', 'value')
+        max_wave_h = request.args.get('max_wave_h', 'value')
+        sig_wave_h = request.args.get('sig_wave_h', 'value')
+        avg_wave_h = request.args.get('kavg_wave_hey', 'value')
+        wave_cycle = request.args.get('wave_cycle', 'value')
     
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
         prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
@@ -71,15 +71,15 @@ def mapGET():
 def locationGET():
     if request.method == 'GET':
 
-        wind_spd = request.args.get('key', 'value')
-        atm_pres = request.args.get('key', 'value')
-        humid = request.args.get('key', 'value')
-        temp = request.args.get('key', 'value')
-        water_temp = request.args.get('key', 'value')
-        max_wave_h = request.args.get('key', 'value')
-        sig_wave_h = request.args.get('key', 'value')
-        avg_wave_h = request.args.get('key', 'value')
-        wave_cycle = request.args.get('key', 'value')
+        wind_spd = request.args.get('wind_spd', 'value')
+        atm_pres = request.args.get('atm_pres', 'value')
+        humid = request.args.get('humid', 'value')
+        temp = request.args.get('temp', 'value')
+        water_temp = request.args.get('water_temp', 'value')
+        max_wave_h = request.args.get('max_wave_h', 'value')
+        sig_wave_h = request.args.get('sig_wave_h', 'value')
+        avg_wave_h = request.args.get('avg_wave_h', 'value')
+        wave_cycle = request.args.get('wave_cycle', 'value')
 
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
         prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
@@ -95,15 +95,15 @@ def locationGET():
 def locationPOST():
     if request.method == 'POST':
 
-        wind_spd = request.args.get('key', 'value')
-        atm_pres = request.args.get('key', 'value')
-        humid = request.args.get('key', 'value')
-        temp = request.args.get('key', 'value')
-        water_temp = request.args.get('key', 'value')
-        max_wave_h = request.args.get('key', 'value')
-        sig_wave_h = request.args.get('key', 'value')
-        avg_wave_h = request.args.get('key', 'value')
-        wave_cycle = request.args.get('key', 'value')
+        wind_spd = request.args.get('wind_spd', 'value')
+        atm_pres = request.args.get('atm_pres', 'value')
+        humid = request.args.get('humid', 'value')
+        temp = request.args.get('temp', 'value')
+        water_temp = request.args.get('water_temp', 'value')
+        max_wave_h = request.args.get('max_wave_h', 'value')
+        sig_wave_h = request.args.get('sig_wave_h', 'value')
+        avg_wave_h = request.args.get('avg_wave_h', 'value')
+        wave_cycle = request.args.get('wave_cycle', 'value')
 
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
         prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
