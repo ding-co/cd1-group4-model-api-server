@@ -2,6 +2,7 @@ import flask
 from flask import Flask, request, render_template
 from flask_json import FlaskJSON, json_response
 import joblib
+
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
@@ -57,7 +58,7 @@ def mapGET():
         wave_cycle = request.args.get('key', 'value')
     
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
-        prediction = (elastic_model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
 
         # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
         prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
@@ -81,7 +82,7 @@ def locationGET():
         wave_cycle = request.args.get('key', 'value')
 
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
-        prediction = (elastic_model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
 
         # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
         prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
@@ -105,7 +106,7 @@ def locationPOST():
         wave_cycle = request.args.get('key', 'value')
 
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
-        prediction = (elastic_model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
 
         # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
         prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
@@ -116,6 +117,6 @@ def locationPOST():
 if __name__=="__main__":
     # 모델 로드
     # ml/model.py 선 실행 후 생성
-    elastic_model = joblib.load('model/model.pkl')
+    model = joblib.load('model/model.pkl')
     # Flask 서비스 스타트
     app.run(host='0.0.0.0',port=8080)
