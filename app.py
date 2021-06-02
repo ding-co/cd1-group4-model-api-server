@@ -3,9 +3,7 @@ from flask import Flask, request, render_template
 from flask_json import FlaskJSON, json_response
 import joblib
 
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+from ml.model import scaler
 
 app = Flask(__name__)
 FlaskJSON(app)
@@ -19,24 +17,6 @@ max_wave_h = None
 sig_wave_h = None
 avg_wave_h = None
 wave_cycle = None
-
-# Load ROSE processing data
-
-doc = pd.read_csv('ml/rose_data.csv', encoding='cp949')
-
-# New dataframe copy exclude unnecessary column
-
-data = doc[['풍속', '기압', '습도', '기온', '수온', '최대파고.m.', '유의파고.m.', '평균파고.m.', '파주기.sec.', 'check']].copy()
-
-# Variable set
-
-x = np.array(data[['풍속', '기압', '습도', '기온', '수온', '최대파고.m.', '유의파고.m.', '평균파고.m.', '파주기.sec.']])
-y = np.array(data[['check']])
-
-# Scaling - MinMaxScaler
-
-scaler = MinMaxScaler()
-scaler.fit(x)
 
 @app.route("/")
 def index():
@@ -54,7 +34,7 @@ def mapGET():
         water_temp = request.args.get('water_temp', 'value')
         max_wave_h = request.args.get('max_wave_h', 'value')
         sig_wave_h = request.args.get('sig_wave_h', 'value')
-        avg_wave_h = request.args.get('kavg_wave_hey', 'value')
+        avg_wave_h = request.args.get('avg_wave_h', 'value')
         wave_cycle = request.args.get('wave_cycle', 'value')
     
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
