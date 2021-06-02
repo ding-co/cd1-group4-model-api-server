@@ -6,3 +6,4 @@ scipy
 virtualenv
 pillow
 Flask-JSON
+pandas
