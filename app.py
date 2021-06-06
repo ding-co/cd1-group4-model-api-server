@@ -32,7 +32,7 @@ def mapGET():
     if request.method == 'GET':
 
         wind_spd = request.args.get('wind_spd', 'value')
-        atm_pres = request.args.get('atm_pres', 'value')
+        ats_pres = request.args.get('atm_pres', 'value')
         humid = request.args.get('humid', 'value')
         temp = request.args.get('temp', 'value')
         water_temp = request.args.get('water_temp', 'value')
@@ -40,9 +40,9 @@ def mapGET():
         sig_wave_h = request.args.get('sig_wave_h', 'value')
         avg_wave_h = request.args.get('avg_wave_h', 'value')
         wave_cycle = request.args.get('wave_cycle', 'value')
-    
+
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
-        prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, ats_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
 
         # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
         prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
@@ -59,13 +59,19 @@ def locationGET():
         
         data = requests.get(url, headers=headers)
         soup = BeautifulSoup(data.text, 'html.parser')
-        idx = request.args.get('idx')
 
-        humid = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({idx}}) > td:nth-child(7)'.format(idx))
-        max_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({idx}}) > td:nth-child(10)'.format(idx))
-        sig_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({idx}) > td:nth-child(11)'.format(idx))
-        avg_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({idx}) > td:nth-child(12)'.format(idx))
-        wave_cycle = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({idx}) > td:nth-child(13)'.format(idx))
+        idx = int(request.args.get('idx', 'value'))
+        
+        if idx ==1:
+            root =1
+        else:
+            root =0
+
+        humid = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+6))
+        max_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+9))
+        sig_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+10))
+        avg_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+11))
+        wave_cycle = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+12))
 
         humid = float(humid.get_text())
         max_wave_h = float(max_wave_h.get_text())
@@ -73,15 +79,12 @@ def locationGET():
         avg_wave_h = float(avg_wave_h.get_text())
         wave_cycle = float(wave_cycle.get_text())
 
-        wind_spd = request.args.get('wind_spd', 'value')
-        atm_pres = request.args.get('atm_pres', 'value')
-        humid = request.args.get('humid', 'value')
-        temp = request.args.get('temp', 'value')
-        water_temp = request.args.get('water_temp', 'value')
-
+        wind_spd = request.args.get('wind_spd', 0)
+        ats_pres = request.args.get('ats_pres', 0)
+        temp = request.args.get('temp', 0)
+        water_temp = request.args.get('water_temp', 0)
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
-        prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
-
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, ats_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
         # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
         prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
         # 결과 리턴
@@ -93,7 +96,7 @@ def locationPOST():
     if request.method == 'POST':
 
         wind_spd = request.args.get('wind_spd', 'value')
-        atm_pres = request.args.get('atm_pres', 'value')
+        ats_pres = request.args.get('atm_pres', 'value')
         humid = request.args.get('humid', 'value')
         temp = request.args.get('temp', 'value')
         water_temp = request.args.get('water_temp', 'value')
@@ -103,7 +106,7 @@ def locationPOST():
         wave_cycle = request.args.get('wave_cycle', 'value')
 
         # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
-        prediction = (model.predict_proba(scaler.transform([[wind_spd, atm_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, ats_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
 
         # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
         prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
