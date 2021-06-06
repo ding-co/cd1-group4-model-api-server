@@ -8,5 +8,5 @@ pillow
 Flask-JSON
 pandas
 BeautifulSoup4
-request
-CORS
+requests
+flask-cors
