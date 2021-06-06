@@ -67,11 +67,11 @@ def locationGET():
         else:
             root =0
 
-        humid = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+6))
-        max_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+9))
-        sig_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+10))
-        avg_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+11))
-        wave_cycle = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-child({0}) > td:nth-child({1})'.format(idx, root+12))
+        humid = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-of-type({0}) > td:nth-of-type({1})'.format(idx, root+6))
+        max_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-of-type({0}) > td:nth-of-type({1})'.format(idx, root+9))
+        sig_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-of-type({0}) > td:nth-of-type({1})'.format(idx, root+10))
+        avg_wave_h = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-of-type({0}) > td:nth-of-type({1})'.format(idx, root+11))
+        wave_cycle = soup.select_one('#content_weather > table.table_develop > tbody > tr:nth-of-type({0}) > td:nth-of-type({1})'.format(idx, root+12))
 
         humid = float(humid.get_text())
         max_wave_h = float(max_wave_h.get_text())
