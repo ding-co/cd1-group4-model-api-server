@@ -90,6 +90,25 @@ def locationGET():
         # 결과 리턴
         return json_response(prediction_ratio=prediction_ratio, humid=humid, max_wave_h=max_wave_h, sig_wave_h=sig_wave_h, avg_wave_h=avg_wave_h, wave_cycle=wave_cycle)
 
+@app.route('/demo', methods=['GET'])
+def demoGET():
+    if request.method == 'GET':
+        humid = request.args.get('humid', 0)
+        max_wave_h = request.args.get('max_wave_h', 0)
+        sig_wave_h = request.args.get('sig_wave_h', 0)
+        avg_wave_h = request.args.get('avg_wave_h', 0)
+        wave_cycle = request.args.get('wave_cycle', 0)
+        wind_spd = request.args.get('wind_spd', 0)
+        ats_pres = request.args.get('ats_pres', 0)
+        temp = request.args.get('temp', 0)
+        water_temp = request.args.get('water_temp', 0)
+        # 입력 받은 변수 값을 가지고 사고 위험 확률 예측
+        prediction = (model.predict_proba(scaler.transform([[wind_spd, ats_pres, humid, temp, water_temp, max_wave_h, sig_wave_h, avg_wave_h, wave_cycle]])))[0]
+        # 예측 값을 1차원 배열로부터 확인 가능한 문자열로 변환
+        prediction_ratio = '{:.2}%'.format(str(prediction[1]*100))
+        # 결과 리턴
+        return json_response(prediction_ratio=prediction_ratio, humid=humid, max_wave_h=max_wave_h, sig_wave_h=sig_wave_h, avg_wave_h=avg_wave_h, wave_cycle=wave_cycle)
+
 # 실시간 위치_method POST
 @app.route('/location', methods=['POST'])
 def locationPOST():
